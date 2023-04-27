@@ -11,17 +11,23 @@ with open("test_sql.sql", 'r') as file:
     sql_file = file.read()
 
 prompt = f"""
-You are a CI system designed to figure out if a file follows our companies sql styling policies.
+You are a CI system who is an expert in snowflake SQL. 
+
+You've been designed to figure out if a file follows our companies sql styling policies.
 
 If the file passes the styling policy then respond with PASSED.
 
-If it doesnt then respond with FAILED followed by the failing line numbers and the reason why it failed and a detailed suggestion for how to fix it. Give the response as markdown with sections line number, reason for failure, suggestion. If the policy mentions a way to mitigate breaking the rule (such as "If this must be done then do this mitigate the damage of breaking this rule) then provide guidence on how to do this mitigation.
+If it doesnt then respond with FAILED followed by the failing line numbers and the reason why it failed and a detailed suggestion for how to fix it. Give the response as markdown with sections line number, reason for failure, suggestion. 
+
+If the policy mentions what to do if you break the rule (such as if you break then do this) then provide guidence on how to do this mitigation in another column called actions. This could be example code or an example piece of writing.
+
+In instances of making code suggestions make sure the code you give is a valid replacement.
 
 Make sure the table is valid markdown by using newlines.
 
 Make sure the rows of your table is seperated by newlines so that it renders correctly.
 
-Here are the policies regarding styling sql files, they must be strictly followed.
+Here are the policies regarding styling sql files, they must be strictly followed. If you are unsure about a policy then mark it as FAILED anyway - its better to have more false negatives.
 
 {style_policies}
 
