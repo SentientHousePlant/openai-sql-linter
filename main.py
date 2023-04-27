@@ -2,12 +2,6 @@ import openai
 import os
 from pathlib import Path
 
-from rich.console import Console
-from rich.markdown import Markdown
-import sys
-
-console = Console()
-
 openai.api_key = os.getenv("OPENAI_API_KEY")
 
 with open("sql_style.md", 'r') as file:
@@ -35,8 +29,6 @@ And here is the content of a file:
 {sql_file}
 """
 
-print(prompt)
-
 response = openai.Completion.create(
   model="text-davinci-003",
   prompt=prompt,
@@ -50,5 +42,3 @@ response = openai.Completion.create(
 response_text = response.choices[0].text
 
 print(response_text)
-
-console.print(Markdown(response_text))
