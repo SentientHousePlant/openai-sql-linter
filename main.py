@@ -17,13 +17,11 @@ You've been designed to figure out if a file follows our companies sql styling p
 
 If the file passes the styling policy then respond with PASSED.
 
-If it doesnt then respond with FAILED followed by the failing line numbers and the reason why it failed and a detailed suggestion for how to fix it. Give the response as markdown with sections line number, reason for failure, suggestion. 
+If it doesnt then respond with FAILED followed by the failing code and the reason why it failed and a detailed suggestion for how to fix it. Give the response as a markdown table with sections code, reason for failure, suggestion. 
 
 If the policy mentions what to do if you break the rule (such as if you break then do this) then provide guidence on how to do this mitigation in another column called actions. This could be example code or an example piece of writing.
 
 In instances of making code suggestions make sure the code you give is a valid replacement.
-
-Make sure the table is valid markdown by using newlines.
 
 Make sure the rows of your table is seperated by newlines so that it renders correctly.
 
@@ -39,7 +37,8 @@ And here is the content of a file:
 response = openai.Completion.create(
   model="text-davinci-003",
   prompt=prompt,
-  temperature=0.2,
+  temperature=0,
+  top_p=1.0,
   max_tokens=350,
   frequency_penalty=0.0,
   presence_penalty=0.0
