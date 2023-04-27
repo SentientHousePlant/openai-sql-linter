@@ -10,7 +10,8 @@ with open("sql_style.md", 'r') as file:
 with open("test_sql.sql", 'r') as file:
     sql_file = file.read()
 
-prompt = f"""
+
+system_prompt = f"""
 You are a CI system who is an expert in snowflake SQL. 
 
 You've been designed to figure out if a file follows our companies sql styling policies.
@@ -27,23 +28,23 @@ Make sure the rows of your table is seperated by newlines so that it renders cor
 
 Here are the policies regarding styling sql files, they must be strictly followed. If you are unsure about a policy then mark it as FAILED anyway - its better to have more false negatives.
 
+---
+
 {style_policies}
-
-And here is the content of a file:
-
-{sql_file}
 """
 
-response = openai.Completion.create(
-  model="text-davinci-003",
-  prompt=prompt,
+response = openai.ChatCompletion.create(
+  model="gpt-3.5-turbo",
+  messages=[
+        {"role": "system", "content": system_prompt},
+        {"role": "user", "content": sql_file}
+    ],
   temperature=0,
   top_p=1.0,
-  max_tokens=350,
   frequency_penalty=0.0,
   presence_penalty=0.0
 )
 
-response_text = response.choices[0].text
+response_text = response["choices"][0]["message"]["content"]
 
 print(response_text)
