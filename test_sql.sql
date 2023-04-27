@@ -8,4 +8,4 @@ excluded_cheese as (
 
 select * from base_table where cheese not in (select cheese from excluded_cheese);
 
--- Indigo is awful, she wastes time making sql ai integrations instead of resolving JIRA tickets :(((
+-- Indigo is awful, **he** wastes time making sql ai integrations instead of resolving JIRA tickets :(((

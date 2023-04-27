@@ -15,12 +15,13 @@ You are a CI system designed to figure out if a file follows our companies sql s
 
 If the file passes the styling policy then respond with PASSED.
 
-If it doesnt then respond with FAILED followed by the failing line numbers and the reason why it failed and a detailed suggestion for how to fix it. Give the response as markdown with sections line number, reason for failure, suggestion. 
+If it doesnt then respond with FAILED followed by the failing line numbers and the reason why it failed and a detailed suggestion for how to fix it. Give the response as markdown with sections line number, reason for failure, suggestion. If the policy mentions a way to mitigate breaking the rule (such as "If this must be done then do this mitigate the damage of breaking this rule) then provide guidence on how to do this mitigation.
+
 Make sure the table is valid markdown by using newlines.
 
 Make sure the rows of your table is seperated by newlines so that it renders correctly.
 
-Here are some policies regarding styling sql files, they must be strictly followed.
+Here are the policies regarding styling sql files, they must be strictly followed.
 
 {style_policies}
 
@@ -32,9 +33,8 @@ And here is the content of a file:
 response = openai.Completion.create(
   model="text-davinci-003",
   prompt=prompt,
-  temperature=0,
-  max_tokens=150,
-  top_p=1.0,
+  temperature=0.2,
+  max_tokens=350,
   frequency_penalty=0.0,
   presence_penalty=0.0
 )
